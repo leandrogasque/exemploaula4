@@ -22,191 +22,243 @@ function processarCadastroUsuario(requisicao, resposta) {
         && dados.cidade && dados.uf && dados.cep)) {
         //estão faltando dados do usuário!
         conteudoResposta = `
-        <!DOCTYPE html>
+        <!doctype html>
+        <html lang="pt-br">
+        
         <head>
-            <meta charset="utf-8">
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+          <title>Cadastro de Eventos</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+          <link rel="stylesheet" href="style.css">
+          <script src="MascarasValidaCPF.js"></script>
         </head>
-
+        
         <body>
-            <div class="container">
-                <form action='/cadastrarUsuario' method='POST' class="row g-3 needs-validation" novalidate>
-                    <fieldset class="border p-2">
-                    <legend class="mb-3">Cadastro de usuário</legend>
-                    <div class="col-md-4">
-                        <label for="" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" value="${dados.nome}" required>
-                    </div>
-        `;
-        if (!dados.nome) {
-            conteudoResposta +=
-                    `<div>
-                        <p class="text-danger">Por favor, informe o nome!</p>
-                    </div>`;
-        }
-        conteudoResposta += `
-                    <div class="col-md-4">
-                        <label for="sobrenome" class="form-label">Sobrenome</label>
-                        <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="${dados.sobrenome}" required>
-                    </div>`;
-        if (!dados.sobrenome) {
-            conteudoResposta +=
-                    `<div>
-                        <p class="text-danger">Por favor, informe o sobrenome!</p>
-                    </div>`;
-        }
-        conteudoResposta += `
-                    <div class="col-md-4">
-                        <label for="nomeUsuario" class="form-label">Nome do usuário</label>
-                        <div class="input-group has-validation">
-                            <span class="input-group-text" id="inputGroupPrepend">@</span>
-                            <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" value="${dados.nomeUsuario}"
-                            aria-describedby="inputGroupPrepend" required>
-                        </div>
-                    </div>
-        `;
-        if (!dados.nomeUsuario) {
-            conteudoResposta +=
-                    `<div>
-                        <p class="text-danger">Por favor, informe o nome de usuário!</p>
-                    </div>`;
-        }
-        conteudoResposta += `
-                    <div class="col-md-6">
-                        <label for="cidade" class="form-label">Cidade</label>
-                        <input type="text" class="form-control" id="cidade" name="cidade" value="${dados.cidade}" required>
-                    </div>`;
-        if (!dados.cidade) {
-            conteudoResposta +=
-                    `<div>
-                        <p class="text-danger">Por favor, informe a cidade!</p>
-                    </div>`;
-        }
-        conteudoResposta += `
-                    <div class="col-md-3">
-                        <label for="uf" class="form-label">UF</label>
-                        <select class="form-select" id="uf" name="uf" value="${dados.uf}" required>
-                            <option selected disabled value="">Escolha um estado...</option>
-                            <option value="AC">Acre</option>
-                            <option value="AL">Alagoas</option>
-                            <option value="AP">Amapá</option>
-                            <option value="AM">Amazonas</option>
-                            <option value="BA">Bahia</option>
-                            <option value="CE">Ceará</option>
-                            <option value="DF">Distrito Federal</option>
-                            <option value="ES">Espírito Santo</option>
-                            <option value="GO">Goiás</option>
-                            <option value="MA">Maranhão</option>
-                            <option value="MT">Mato Grosso</option>
-                            <option value="MS">Mato Grosso do Sul</option>
-                            <option value="MG">Minas Gerais</option>
-                            <option value="PA">Pará</option>
-                            <option value="PB">Paraíba</option>
-                            <option value="PR">Paraná</option>
-                            <option value="PE">Pernambuco</option>
-                            <option value="PI">Piauí</option>
-                            <option value="RJ">Rio de Janeiro</option>
-                            <option value="RN">Rio Grande do Norte</option>
-                            <option value="RS">Rio Grande do Sul</option>
-                            <option value="RO">Rondônia</option>
-                            <option value="RR">Roraima</option>
-                            <option value="SC">Santa Catarina</option>
-                            <option value="SP">São Paulo</option>
-                            <option value="SE">Sergipe</option>
-                            <option value="TO">Tocantins</option>
-                        </select>
-                    </div>`;
-        if (!dados.uf) {
-            conteudoResposta +=
-                `<div>
-                    <p class="text-danger">Por favor, informe o estado!</p>
-                </div>`;
-        }
-        conteudoResposta+=`
-                <div class="col-md-3">
-                    <label for="cep" class="form-label">CEP</label>
-                    <input type="text" class="form-control" id="cep" name="cep" value="${dados.cep}" required>
+          <header>
+          </header>
+          <main class="background">
+            <div class="container mt-4 col-8">
+              <h1>Cadastro De Alunos em Eventos Universitários</h1>
+              <form action='/cadastro' method='POST' class="row g-3 needs-validation mt-4" novalidate>
+                <div class="col-md-2">
+                  <label for="nome" class="form-label">RA</label>
+                  <input type="text" class="form-control" id="ra" name="ra"  value="${dados.ra}" required>
                 </div>
-        `;
-        if (!dados.cep) {
-            conteudoResposta +=
-                `<div>
-                    <p class="text-danger">Por favor, informe o CEP!</p>
-                </div>`;
-        }
-        conteudoResposta += `
-                <div class="col-12 mt-2">
-                    <button class="btn btn-primary" type="submit">Cadastrar</button>
-                </div>
-                </fieldset>
-                </form>
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
-        </body>
-        </html>`;
-        resposta.end(conteudoResposta);
-
-    }
-    else {
-        const usuario = {
-            nome: dados.nome,
-            sobrenome: dados.sobrenome,
-            nomeUsuario: dados.nomeUsuario,
-            cidade: dados.cidade,
-            uf: dados.uf,
-            cep: dados.cep
-        }
-        //adiciona um novo usuário na lista de usuários já cadastrados
-        listaUsuarios.push(usuario);
-        //retornar a lista de usuários
-        conteudoResposta = `
-    <!DOCTYPE html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Menu do sistema</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    </head>
-    <body>
-        <h1>Lista de usuário cadastrados</h1>
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Sobronome</th>
-                    <th>Nome de usuário</th>
-                    <th>Cidade/UF</th>
-                    <th>CEP</th>
-                </tr>
-            </thead>
-            <tbody> `;
-
-        for (const usuario of listaUsuarios) {
-            conteudoResposta += `
-                    <tr>
-                        <td>${usuario.nome}</td>
-                        <td>${usuario.sobrenome}</td>
-                        <td>${usuario.nomeUsuario}</td>
-                        <td>${usuario.cidade}/${usuario.uf}</td>
-                        <td>${usuario.cep}</td>
-                    <tr>
                 `;
-        }
-
-        conteudoResposta += `
-            </tbody>
-        </table>
-        <a class="btn btn-primary" href="/" role="button">Voltar ao menu</a>
-        <a class="btn btn-primary" href="/cadastraUsuario.html" role="button">Continuar cadastrando</a>
-    </body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-
-    </html>`;
+                if (!dados.ra) {
+                conteudoResposta += `<div>
+                  <p class="text-danger">O campo R.A é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-md-4">
+                  <label for="nome" class="form-label">Nome</label>
+                  <input type="text" class="form-control" id="nome" name="nome" value="${dados.nome}" required>
+                </div>
+                `;
+                if (!dados.nome) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo Nome é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-md-6">
+                  <label for="sobrenome" class="form-label">Sobrenome</label>
+                  <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="${dados.sobrenome}" required>
+                </div>
+                `;
+                if (!dados.sobrenome) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo Sobrenome é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-md-6">
+                  <label for="cidade" class="form-label">Cidade</label>
+                  <input type="text" class="form-control" id="cidade" name="cidade" value="${dados.cidade}" required>
+                </div>
+                `;
+                if (!dados.cidade) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo Cidade é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-md-3">
+                  <label for="estado" class="form-label">UF</label>
+                  <select class="form-select" id="estado" name="estado" value="${dados.estado}" required>
+                    <option selected disabled value="">Escolha</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                    <option value="EX">Estrangeiro</option>
+                  </select>
+                </div>
+                `;
+                if (!dados.estado) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo UF é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-md-3">
+                  <label for="cep" class="form-label">CEP</label>
+                  <input type="text" class="form-control" id="cep" name="cep"  value="${dados.cep}" required>
+                </div>
+                `;
+                if (!dados.cep) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo CEP é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-md-3">
+                  <label for="telefone" class="form-label">Telefone</label>
+                  <input type="text" class="form-control" id="telefone" name="telefone" value="${dados.telefone}" required>
+                </div>
+                `;
+                if (!dados.telefone) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo Telefone é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="text" class="form-control" id="email" name="email" value="${dados.email}" required>
+                </div>
+                `;
+                if (!dados.email) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo Email é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-md-6">
+                  <label for="evento" class="form-label">Evento</label>
+                  <input type="text" class="form-control" id="evento" name="evento" value="${dados.evento}" required>
+                </div>
+                `;
+                if (!dados.evento) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo Evento é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-md-3">
+                  <label for="dataInicio" class="form-label">Data Inicio</label>
+                  <input type="date" class="form-control" id="dataInicio" name="dataInicio" value="${dados.dataInicio}" required>
+                </div>
+                `;
+                if (!dados.dataInicio) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo Data Inicio é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-md-3">
+                  <label for="horaInicio" class="form-label">Hora</label>
+                  <input type="time" class="form-control" id="horaInicio" name="horaInicio" value="${dados.horaInicio}" required>
+                </div>`;
+                if (!dados.horaInicio) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo Hora é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-md-3">
+                  <label for="dataFim" class="form-label">Data Fim</label>
+                  <input type="date" class="form-control" id="dataFim" name="dataFim" value="${dados.dataFim}" required>
+                </div>
+                `;
+                if (!dados.dataFim) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo Data Fim é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-md-3">
+                  <label for="horaFim" class="form-label">Hora</label>
+                  <input type="time" class="form-control" id="horaFim" name="horaFim" value="${dados.horaFim}" required>
+                </div>
+                `;
+                if (!dados.horaFim) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo Hora Fim é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" name="inavalidCheck" value="${dados.inavalidCheck}" required>
+                    <label class="form-check-label" for="invalidCheck">
+                      Concordo com os termos e condições.
+                    </label>
+                  </div>
+                </div>
+                `;
+                if (!dados.inavalidCheck) {
+                conteudoResposta += `
+                <div>
+                  <p class="text-danger">O campo Concordo com os termos e condições é obrigatório</p>
+                </div>`;
+                }
+                conteudoResposta += `
+                <div class="col-12">
+                  <button class="btn btn-primary col-12" type="submit">Cadastrar</button>
+                </div>
+              </form>
+            </div>
+          </main>
+          <footer>
+          </footer>
+          <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+            </script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+            integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+            </script>
+        </body>
+        
+        </html>`;
         resposta.end(conteudoResposta);
     }//fim do if/else 
 }
