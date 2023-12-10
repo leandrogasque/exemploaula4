@@ -348,7 +348,7 @@ app.post('/login', (requisicao, resposta)=>{
 });
 
 //rota para processar o cadastro de usuários endpoint = '/cadastrarUsuario'
-app.post('/cadastrarUsuario',autenticar, processarCadastroUsuario);
+app.post('/cadastro',autenticar, processarCadastroUsuario);
 
 app.listen(porta, host, () => {
     console.log(`Servidor executando na url http://${host}:${porta}`);
