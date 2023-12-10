@@ -41,7 +41,7 @@ function processarCadastroUsuario(requisicao, resposta) {
           <main class="background">
             <div class="container mt-4 col-8">
               <h1>Cadastro De Alunos em Eventos Universitários</h1>
-              <form action='/cadastro' method='POST' class="row g-3 needs-validation mt-4" novalidate>
+              <form action='/cadastrarUsuario' method='POST' class="row g-3 needs-validation mt-4" novalidate>
                 <div class="col-md-2">
                   <label for="nome" class="form-label">RA</label>
                   <input type="text" class="form-control" id="ra" name="ra"  value="${dados.ra}" required>
